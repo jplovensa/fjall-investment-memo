@@ -2,24 +2,26 @@
 Palette Name: Institutional Prestige (Obsidian Black, Deep Slate, Neon Emerald, Crisp White)
 Confirmation: I explicitly confirm that NEITHER Mermaid JS NOR SVG were used anywhere in the output.
 Narrative Plan:
-1. Loader: "540 Days -> 45 Days Base Drop" countdown to hook the investor on the core value proposition.
+1. Loader: "Legacy vs Fjäll" cinematic progress bar comparison.
 2. Cover/Trajectory: "Bootstrapped to $5M -> $23M Pipeline -> Global Scaling" progression nodes.
-3. Overview: Institutional summary of the $3M ask, clearly positioning Fjäll.
-4. Market Deficit: Data charts showing the massive housing gap.
-5. Capabilities: The IP Moat (PIR 100, BEMMELS) presented as high-end tech-specs.
-6. Traction & GTM: Focuses on "Negative Working Capital". Includes a seamless, mobile-responsive interactive GTM Engine loop.
-7. Expansion Matrix: Interactive CSS-based strategic node heatmap. Optimized for mobile tap targets.
-8. Unit Economics: WA deployments cash generator breakdown.
-9. Simulator: Interactive unit economics slider, fully converted to USD.
-10. Fund Allocation: The three pillars of deployment.
-11. Structure & Next Steps: Post-transaction cap table, stacked for mobile screens.
+3. Mobile Dashboard UI: Implemented a fixed bottom dock for mobile users to navigate like a dashboard app.
+4. Overview: Institutional summary of the $3M ask.
+5. Market Deficit: Data charts showing the massive housing gap.
+6. Capabilities: The IP Moat (GX-100, BEMMELS).
+7. Traction & GTM: Focuses on "Negative Working Capital" and includes a responsive, CSS-Grid based interactive Capital Engine loop.
+8. Expansion Matrix: Interactive CSS-based strategic node heatmap, refactored for intrinsic mobile heights.
+9. Unit Economics: Redesigned as massive dashboard cards.
+10. Simulator: Interactive unit economics slider.
+11. Fund Allocation: The three pillars of deployment.
+12. The Promised Land: Post-funding simulation, showcasing 10k units, OEM framework, and $250M EV.
+13. Structure & Next Steps: Post-transaction cap table.
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Fjäll Solutions - Premium Investment Memorandum</title>
+<title>Fjäll Solutions - Investor Dashboard</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -47,17 +49,12 @@ Narrative Plan:
         },
         animation: {
           'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-          'float': 'float 6s ease-in-out infinite',
-          'glow': 'glow 3s ease-in-out infinite alternate',
+          'crawl': 'crawl 15s ease-out forwards',
         },
         keyframes: {
-          float: {
-            '0%, 100%': { transform: 'translateY(0)' },
-            '50%': { transform: 'translateY(-10px)' },
-          },
-          glow: {
-            '0%': { boxShadow: '0 0 15px rgba(16,185,129,0.1)' },
-            '100%': { boxShadow: '0 0 30px rgba(16,185,129,0.4)' }
+          crawl: {
+            '0%': { width: '0%' },
+            '100%': { width: '12%' },
           }
         }
       }
@@ -79,69 +76,63 @@ body {
 
 /* --- Preloader --- */
 #initial-loader {
-    position: fixed;
-    inset: 0;
-    background: #030712;
-    z-index: 99999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    position: fixed; inset: 0; background: #030712; z-index: 99999;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
     transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
-    padding: 1.5rem;
 }
 .loader-grid {
-    position: absolute;
-    inset: 0;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    z-index: -1;
+    position: absolute; inset: 0;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px; z-index: -1;
 }
 
 /* --- Ambient Background --- */
 .ambient-bg {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 60%),
                 radial-gradient(circle at 80% 100%, rgba(30, 41, 59, 0.5) 0%, transparent 50%);
-    z-index: -2;
-    pointer-events: none;
+    z-index: -2; pointer-events: none;
 }
 .grid-overlay {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background-image: 
         linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 60px 60px;
-    z-index: -1;
-    pointer-events: none;
+    background-size: 60px 60px; z-index: -1; pointer-events: none;
     mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
 }
 
+/* --- Mobile Dashboard Dock --- */
+.mobile-dock {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(3, 7, 18, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(51, 65, 85, 0.8); z-index: 100;
+    display: flex; justify-content: space-around; align-items: center;
+    padding: 0.75rem 0.5rem calc(0.75rem + env(safe-area-inset-bottom));
+}
+@media (min-width: 1024px) { .mobile-dock { display: none; } }
+.dock-item {
+    display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+    color: #64748b; font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; transition: color 0.2s; text-decoration: none;
+}
+.dock-item.active { color: #10b981; }
+.dock-icon { font-size: 1.2rem; font-family: monospace; line-height: 1; margin-bottom: 2px; }
+@media (max-width: 1023px) { .main-content { padding-bottom: 6rem !important; } }
+
 /* --- Institutional Glass Panels --- */
 .glass-panel {
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(51, 65, 85, 0.5);
-    border-radius: 1.25rem;
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(51, 65, 85, 0.5); border-radius: 1.25rem; padding: 2rem;
+    position: relative; overflow: hidden; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 @media (min-width: 768px) { .glass-panel { padding: 2.5rem; border-radius: 1.5rem; } }
-
 .glass-panel::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 1px;
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.5), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.6s ease;
+    transform: translateX(-100%); transition: transform 0.6s ease;
 }
 .glass-panel:hover {
     border-color: rgba(16, 185, 129, 0.3);
@@ -152,184 +143,109 @@ body {
 
 /* --- Chart Containers --- */
 .chart-container {
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    margin-left: auto; margin-right: auto;
-    height: 250px; max-height: 350px;
+    position: relative; width: 100%; max-width: 100%;
+    margin-left: auto; margin-right: auto; height: 250px; max-height: 350px;
 }
 @media (min-width: 768px) { .chart-container { height: 320px; max-height: 400px; } }
 
 /* --- Typography --- */
 .kicker {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #10b981; 
-    margin-bottom: 1.5rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 1rem;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #10b981; 
+    margin-bottom: 1.5rem; display: inline-flex; align-items: center; gap: 1rem;
 }
 .kicker::before {
-    content: '';
-    display: inline-block;
-    width: 30px; height: 2px;
-    background: linear-gradient(90deg, #10b981, transparent);
+    content: ''; display: inline-block; width: 30px; height: 2px; background: linear-gradient(90deg, #10b981, transparent);
 }
 .stat-value {
-    font-size: 2.5rem;
-    font-weight: 300;
-    color: #ffffff;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
+    font-size: 2.5rem; font-weight: 300; color: #ffffff; letter-spacing: -0.02em; line-height: 1.1;
 }
 @media (min-width: 768px) { .stat-value { font-size: 3.5rem; } }
 
-/* --- Navigation --- */
+/* --- Navigation Desktop --- */
 .nav-link {
-    position: relative;
-    padding: 0.8rem 1.5rem;
-    color: #64748b;
-    transition: all 0.3s ease;
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    border-left: 2px solid transparent;
+    position: relative; padding: 0.8rem 1.5rem; color: #64748b;
+    transition: all 0.3s ease; font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.05em; text-transform: uppercase; border-left: 2px solid transparent;
 }
-.nav-link:hover {
-    color: #f8fafc;
-    background: rgba(30, 41, 59, 0.3);
-}
+.nav-link:hover { color: #f8fafc; background: rgba(30, 41, 59, 0.3); }
 .nav-link.active {
-    color: #ffffff;
-    font-weight: 700;
-    border-left-color: #10b981;
+    color: #ffffff; font-weight: 700; border-left-color: #10b981;
     background: linear-gradient(90deg, rgba(16, 185, 129, 0.1) 0%, transparent 100%);
 }
 
-/* --- Range Sliders (Mobile Optimized) --- */
+/* --- Range Sliders --- */
 input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
 input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 28px; width: 28px; /* Larger for mobile touch */
-    border-radius: 50%;
-    background: #020617;
-    border: 2px solid #10b981;
-    cursor: pointer;
-    margin-top: -13px;
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-    transition: all 0.2s ease;
+    -webkit-appearance: none; height: 28px; width: 28px; 
+    border-radius: 50%; background: #020617; border: 2px solid #10b981;
+    cursor: pointer; margin-top: -13px; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); transition: all 0.2s ease;
 }
 input[type=range]::-webkit-slider-thumb:hover, input[type=range]::-webkit-slider-thumb:active { 
     transform: scale(1.15); background: #10b981; 
 }
-input[type=range]::-webkit-slider-runnable-track {
-    width: 100%; height: 2px;
-    cursor: pointer;
-    background: rgba(51, 65, 85, 0.8);
-}
+input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; cursor: pointer; background: rgba(51, 65, 85, 0.8); }
 
 /* --- Scroll Reveal --- */
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal.active {
-    opacity: 1; transform: translateY(0);
-}
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
 section { scroll-margin-top: 5rem; }
 @media (min-width: 1024px) { section { scroll-margin-top: 2rem; } }
 
 /* --- Heatmap Matrix --- */
 .matrix-container {
-    position: relative;
-    background: #020617;
-    border: 1px solid rgba(51, 65, 85, 0.5);
-    border-radius: 1rem;
-    overflow: hidden;
+    position: relative; background: #020617;
+    border: 1px solid rgba(51, 65, 85, 0.5); border-radius: 1rem; overflow: hidden;
     background-image: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
 }
 .heatmap-node {
-    position: absolute;
-    width: 20px; height: 20px; /* slightly larger for mobile */
-    background: #10b981;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    z-index: 10;
+    position: absolute; width: 20px; height: 20px; 
+    background: #10b981; border-radius: 50%;
+    transform: translate(-50%, -50%); cursor: pointer; z-index: 10;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
 }
-/* Extended touch target */
-.heatmap-node::after {
-    content: ''; position: absolute; inset: -15px; border-radius: 50%;
-}
+.heatmap-node::after { content: ''; position: absolute; inset: -15px; border-radius: 50%; }
 .heatmap-node::before {
     content: ''; position: absolute; inset: -12px;
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    border-radius: 50%;
+    border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 50%;
     animation: pulse-slow 3s infinite;
 }
 .heatmap-node.regional { background: #0ea5e9; box-shadow: 0 0 20px rgba(14, 165, 233, 0.5); }
 .heatmap-node.regional::before { border-color: rgba(14, 165, 233, 0.3); }
 .heatmap-node.global { background: #f43f5e; box-shadow: 0 0 20px rgba(244, 63, 94, 0.5); width: 14px; height: 14px; }
 .heatmap-node.global::before { border-color: rgba(244, 63, 94, 0.3); inset: -8px; }
-.heatmap-node:hover, .heatmap-node.active { 
-    transform: translate(-50%, -50%) scale(1.4);
-    background: #ffffff;
-}
+.heatmap-node:hover, .heatmap-node.active { transform: translate(-50%, -50%) scale(1.4); background: #ffffff; }
 .node-label {
-    position: absolute; top: 100%; left: 50%;
-    transform: translateX(-50%);
-    margin-top: 15px;
-    color: #cbd5e1;
-    font-size: 0.7rem; font-weight: 600;
-    letter-spacing: 0.05em; text-transform: uppercase;
-    white-space: nowrap; pointer-events: none; opacity: 0.8;
+    position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    margin-top: 15px; color: #cbd5e1; font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; pointer-events: none; opacity: 0.8;
 }
-.heatmap-node:hover .node-label, .heatmap-node.active .node-label {
-    color: #ffffff; opacity: 1; font-weight: 700;
-}
+.heatmap-node:hover .node-label, .heatmap-node.active .node-label { color: #ffffff; opacity: 1; font-weight: 700; }
 .css-connector {
-    position: absolute;
-    background: linear-gradient(90deg, rgba(16,185,129,0.5), transparent);
-    height: 1px;
-    transform-origin: left center;
-    z-index: 1; pointer-events: none; opacity: 0.4;
+    position: absolute; background: linear-gradient(90deg, rgba(16,185,129,0.5), transparent);
+    height: 1px; transform-origin: left center; z-index: 1; pointer-events: none; opacity: 0.4;
 }
 
 /* --- Interactive Capital Engine Loop --- */
 .engine-node {
-    border: 1px solid rgba(51, 65, 85, 0.8);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    opacity: 0.4;
-    transform: scale(0.95);
+    border: 1px solid rgba(51, 65, 85, 0.8); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0.4; transform: scale(0.95);
 }
 .engine-node.active {
-    opacity: 1;
-    border-color: #10b981;
-    background: #022c22;
+    opacity: 1; border-color: #10b981; background: #022c22;
     box-shadow: 0 0 30px rgba(16, 185, 129, 0.2) inset, 0 0 20px rgba(16, 185, 129, 0.4);
-    transform: scale(1.1);
-    color: #10b981;
+    transform: scale(1.1); color: #10b981;
 }
 .engine-particle {
-    position: absolute;
-    width: 8px; height: 8px;
-    background: #10b981;
-    border-radius: 50%;
-    box-shadow: 0 0 15px #10b981, 0 0 30px #10b981;
-    opacity: 0;
+    position: absolute; width: 8px; height: 8px; background: #10b981; border-radius: 50%;
+    box-shadow: 0 0 15px #10b981, 0 0 30px #10b981; opacity: 0;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.engine-text {
-    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    width: 100%; /* For mobile centering */
-}
+
+/* Grid Stacking System to fix absolute overlaps */
+.grid-stack { display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr; }
+.grid-stack-item { grid-column: 1 / 2; grid-row: 1 / 2; }
 </style>
 </head>
 <body class="relative flex flex-col lg:flex-row min-h-screen selection:bg-emerald-900 selection:text-white">
@@ -337,29 +253,71 @@ section { scroll-margin-top: 5rem; }
 <!-- INTRO LOADER -->
 <div id="initial-loader">
     <div class="loader-grid"></div>
-    <div class="text-center z-10 flex flex-col items-center justify-center max-w-sm px-4">
-        <div id="loader-title" class="font-mono text-slate-500 uppercase tracking-[0.2em] text-xs md:text-sm mb-6 opacity-80">Industry Standard Construction Cycle</div>
-        <div class="flex items-baseline gap-2 md:gap-4 mb-6">
-            <div id="loader-days" class="text-7xl md:text-[9rem] font-light text-white font-mono leading-none tracking-tighter transition-colors duration-300">540</div>
-            <div class="text-xl md:text-2xl text-slate-500 font-mono tracking-widest uppercase">Days</div>
+    <div class="w-full max-w-xl mx-auto px-8 z-10 flex flex-col items-center justify-center space-y-12">
+        
+        <div class="w-full space-y-3 opacity-60" id="loader-trad">
+            <div class="flex justify-between font-mono text-[0.65rem] md:text-xs text-slate-400 uppercase tracking-widest">
+                <span>Legacy Construction</span>
+                <span>540 Days</span>
+            </div>
+            <div class="h-1 w-full bg-slate-900 rounded-full overflow-hidden">
+                <div class="h-full bg-slate-500 w-0 animate-crawl"></div>
+            </div>
         </div>
-        <div id="loader-subtitle" class="font-mono text-emerald-500 uppercase tracking-[0.1em] md:tracking-[0.2em] text-sm md:text-lg font-bold opacity-0 transition-opacity duration-500 text-center">
-            [ FJÄLL MMC TURNKEY ASSEMBLY SECURED ]
+
+        <div class="w-full space-y-3 opacity-0 transform translate-y-4 transition-all duration-700 ease-out" id="loader-fjall">
+            <div class="flex justify-between font-mono text-xs md:text-sm text-emerald-400 uppercase tracking-widest">
+                <span class="font-bold">Fjäll MMC Assembly</span>
+                <span class="font-bold text-white shadow-emerald-500/50 drop-shadow-md">45 Days</span>
+            </div>
+            <div class="h-1.5 w-full bg-slate-900 rounded-full overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                <div class="h-full bg-emerald-500 w-0" id="loader-fjall-bar"></div>
+            </div>
         </div>
+
+        <div id="loader-subtitle" class="text-center pt-8 opacity-0 transition-opacity duration-500 w-full">
+            <span class="font-mono text-white tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-sm font-bold shadow-black drop-shadow-lg">
+                [ SYSTEM UNLOCKED ]
+            </span>
+        </div>
+
     </div>
 </div>
 
 <div class="ambient-bg"></div>
 <div class="grid-overlay"></div>
 
-<!-- Mobile Top Navigation -->
-<nav class="lg:hidden sticky top-0 z-50 bg-obsidian/95 backdrop-blur-xl border-b border-slate-800 px-5 py-4 flex justify-between items-center shadow-2xl">
+<!-- Mobile Dashboard Header -->
+<header class="lg:hidden sticky top-0 z-40 bg-obsidian/95 backdrop-blur-xl border-b border-slate-800 px-5 py-4 flex justify-between items-center shadow-md">
     <div class="flex items-center space-x-3">
-        <span class="font-bold text-xl tracking-widest text-white">FJÄLL</span>
+        <div class="w-8 h-8 rounded bg-emerald-950 border border-emerald-500/50 flex items-center justify-center">
+            <span class="font-bold text-sm text-emerald-400">F</span>
+        </div>
+        <span class="font-bold text-lg tracking-widest text-white">FJÄLL</span>
     </div>
-    <div class="text-[0.6rem] font-bold tracking-[0.15em] text-emerald-400 border border-emerald-900/50 bg-emerald-950/30 px-3 py-1.5 uppercase rounded">
-        Confidential
+    <div class="text-[0.6rem] font-bold tracking-[0.15em] text-slate-400 bg-slate-900 px-3 py-1.5 uppercase rounded border border-slate-800">
+        Dashboard
     </div>
+</header>
+
+<!-- Mobile Dashboard Dock -->
+<nav class="mobile-dock">
+    <a href="#overview" class="dock-item active">
+        <span class="dock-icon">▤</span>
+        <span>Summary</span>
+    </a>
+    <a href="#traction" class="dock-item">
+        <span class="dock-icon">↗</span>
+        <span>Traction</span>
+    </a>
+    <a href="#financials" class="dock-item">
+        <span class="dock-icon">∑</span>
+        <span>Model</span>
+    </a>
+    <a href="#promised-land" class="dock-item">
+        <span class="dock-icon">★</span>
+        <span>Vision</span>
+    </a>
 </nav>
 
 <!-- Desktop Sidebar Navigation -->
@@ -367,7 +325,7 @@ section { scroll-margin-top: 5rem; }
     <div>
         <div class="mb-12 px-10">
             <span class="font-bold text-4xl tracking-widest text-white">FJÄLL<span class="text-emerald-500">.</span></span>
-            <div class="text-[0.65rem] text-slate-500 tracking-widest uppercase mt-3">Investment Memorandum</div>
+            <div class="text-[0.65rem] text-slate-500 tracking-widest uppercase mt-3">Investor Dashboard</div>
         </div>
 
         <nav class="flex flex-col space-y-1">
@@ -380,20 +338,21 @@ section { scroll-margin-top: 5rem; }
             <a href="#financials" class="nav-link">06. Unit Economics</a>
             <a href="#simulator" class="nav-link">07. Financial Model</a>
             <a href="#allocation" class="nav-link">08. Fund Allocation</a>
-            <a href="#structure" class="nav-link">09. Transaction Terms</a>
+            <a href="#promised-land" class="nav-link text-emerald-400">09. The Promised Land</a>
+            <a href="#structure" class="nav-link">10. Transaction Terms</a>
         </nav>
     </div>
 
     <div class="px-10 pb-6">
         <div class="text-[0.65rem] font-semibold tracking-widest text-slate-500 uppercase border-t border-slate-800 pt-6">
             Prepared Strictly For:<br/>
-            <span class="text-emerald-400 block mt-2 text-sm font-light tracking-wider">Tarian Partners</span>
+            <span class="text-emerald-400 block mt-2 text-sm font-light tracking-wider">Authorised Investors</span>
         </div>
     </div>
 </aside>
 
 <!-- Main Content Area -->
-<main class="flex-1 lg:ml-[300px] w-full max-w-6xl mx-auto px-5 sm:px-10 lg:px-20 py-12 lg:py-24 space-y-28 lg:space-y-36 relative z-10">
+<main class="flex-1 lg:ml-[300px] w-full max-w-6xl mx-auto px-5 sm:px-10 lg:px-20 py-12 lg:py-24 space-y-28 lg:space-y-36 relative z-10 main-content">
 
     <!-- 00. Narrative / Story Line -->
     <section id="narrative" class="min-h-[85vh] flex flex-col justify-center reveal">
@@ -416,7 +375,7 @@ section { scroll-margin-top: 5rem; }
                     <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-obsidian border-2 border-slate-600 group-hover:border-emerald-500 transition-colors z-10 hidden sm:block"></div>
                     <div class="text-[0.65rem] font-bold text-slate-500 uppercase tracking-widest mb-2">Phase 01 // 2019 - 2026</div>
                     <h3 class="text-xl md:text-2xl font-light text-white mb-2">Proof of Concept</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">Initial capital deployment of $600,000 USD to validate product-market fit, core material science (PIR 100/BEMMELS), and supply-chain viability.</p>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">Initial capital deployment of $600,000 USD to validate product-market fit, core material science (GX-100/BEMMELS), and supply-chain viability.</p>
                     <div class="inline-block border border-slate-700 bg-slate-800/50 text-slate-300 text-xs px-3 py-1 rounded">Fully Realised</div>
                 </div>
 
@@ -568,10 +527,12 @@ section { scroll-margin-top: 5rem; }
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             <div class="glass-panel p-6 md:p-10 group border-t-2 border-t-transparent hover:border-t-emerald-500">
                 <div class="flex items-center gap-4 md:gap-5 mb-6 md:mb-8">
-                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-lg md:text-xl shadow-inner group-hover:bg-emerald-900/30 group-hover:border-emerald-500 transition-colors shrink-0">🛡️</div>
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-lg md:text-xl shadow-inner group-hover:bg-emerald-900/30 group-hover:border-emerald-500 transition-colors shrink-0">
+                        <span style="font-family: sans-serif;">G1</span>
+                    </div>
                     <div>
                         <div class="text-[0.55rem] md:text-[0.65rem] text-slate-500 uppercase tracking-widest font-bold mb-1">Material Spec 01</div>
-                        <h3 class="text-xl md:text-2xl font-medium text-white">PIR 100 Panels</h3>
+                        <h3 class="text-xl md:text-2xl font-medium text-white">GX-100 Panels</h3>
                     </div>
                 </div>
                 <p class="text-slate-400 text-sm md:text-base leading-relaxed mb-6">
@@ -582,7 +543,9 @@ section { scroll-margin-top: 5rem; }
 
             <div class="glass-panel p-6 md:p-10 group border-t-2 border-t-transparent hover:border-t-emerald-500">
                 <div class="flex items-center gap-4 md:gap-5 mb-6 md:mb-8">
-                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-lg md:text-xl shadow-inner group-hover:bg-emerald-900/30 group-hover:border-emerald-500 transition-colors shrink-0">🏗️</div>
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-lg md:text-xl shadow-inner group-hover:bg-emerald-900/30 group-hover:border-emerald-500 transition-colors shrink-0">
+                        <span style="font-family: sans-serif;">B2</span>
+                    </div>
                     <div>
                         <div class="text-[0.55rem] md:text-[0.65rem] text-slate-500 uppercase tracking-widest font-bold mb-1">Material Spec 02</div>
                         <h3 class="text-xl md:text-2xl font-medium text-white">BEMMELS Beams</h3>
@@ -596,7 +559,7 @@ section { scroll-margin-top: 5rem; }
         </div>
     </section>
 
-    <!-- 04. GTM & Traction -->
+    <!-- 04. GTM & Commercial Arbitrage -->
     <section id="traction" class="space-y-10 lg:space-y-12 reveal pt-12 lg:pt-16 border-t border-slate-800/50">
         <div class="max-w-4xl">
             <span class="kicker">04. Go-To-Market & Commercial Arbitrage</span>
@@ -606,8 +569,8 @@ section { scroll-margin-top: 5rem; }
             </p>
         </div>
 
-        <!-- Interactive Capital Velocity Engine -->
-        <div class="glass-panel !p-0 overflow-hidden mb-12 mt-8 lg:mt-12 border-emerald-900/40 shadow-[0_0_50px_rgba(16,185,129,0.05)]">
+        <!-- Interactive Capital Velocity Engine (CSS Grid Based to prevent mobile overlap) -->
+        <div class="glass-panel !p-0 overflow-hidden mb-12 mt-8 border-emerald-900/40 shadow-[0_0_50px_rgba(16,185,129,0.05)]">
             <div class="bg-[#0a0f1c] p-5 md:p-8 border-b border-slate-800/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div class="flex items-center gap-3 md:gap-4">
                     <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981] shrink-0"></div>
@@ -618,12 +581,12 @@ section { scroll-margin-top: 5rem; }
                 </div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 bg-[#030712] relative min-h-[450px] md:min-h-0">
-                <!-- Circular Track -->
-                <div class="p-6 md:p-10 border-b md:border-b-0 md:border-r border-slate-800/50 relative flex flex-col justify-center items-center min-h-[300px] md:min-h-[400px]">
+            <div class="flex flex-col lg:flex-row bg-[#030712]">
+                <!-- Circular Track (Top on Mobile, Left on Desktop) -->
+                <div class="w-full lg:w-5/12 p-6 md:p-10 border-b lg:border-b-0 lg:border-r border-slate-800/50 relative flex justify-center items-center min-h-[300px] md:min-h-[350px]">
                     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.05)_0%,transparent_70%)] pointer-events-none"></div>
                     
-                    <div class="relative w-48 h-48 md:w-64 md:h-64">
+                    <div class="relative w-48 h-48 md:w-56 md:h-56">
                         <div class="absolute inset-0 border border-slate-700/50 rounded-full border-dashed"></div>
                         
                         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-20 bg-[#030712] p-3 md:p-4 rounded-full border border-slate-800 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
@@ -631,7 +594,6 @@ section { scroll-margin-top: 5rem; }
                             <div class="text-[0.45rem] md:text-[0.55rem] text-emerald-400 font-mono">YIELD CORE</div>
                         </div>
 
-                        <!-- Nodes size reduced slightly for mobile -->
                         <div id="en-node-0" class="engine-node absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-slate-900 rounded-full flex items-center justify-center text-[0.65rem] md:text-xs font-mono text-slate-400 z-10">01</div>
                         <div id="en-node-1" class="engine-node absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-slate-900 rounded-full flex items-center justify-center text-[0.65rem] md:text-xs font-mono text-slate-400 z-10">02</div>
                         <div id="en-node-2" class="engine-node absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-slate-900 rounded-full flex items-center justify-center text-[0.65rem] md:text-xs font-mono text-slate-400 z-10">03</div>
@@ -641,32 +603,34 @@ section { scroll-margin-top: 5rem; }
                     </div>
                 </div>
 
-                <!-- Changing Text Content -->
-                <!-- Mobile: Center text horizontally, full width. Desktop: Keep side padding. -->
-                <div class="p-6 sm:p-10 md:p-14 flex flex-col justify-center relative flex-grow min-h-[250px] md:min-h-[300px] overflow-hidden">
-                    
-                    <div id="en-text-0" class="engine-text absolute inset-x-6 sm:inset-x-10 md:inset-x-14 top-1/2 -translate-y-1/2 opacity-0 pointer-events-none flex flex-col justify-center">
-                        <div class="text-emerald-500 font-mono text-[0.65rem] md:text-xs mb-2 md:mb-3 tracking-widest uppercase">Phase 01</div>
-                        <h4 class="text-xl md:text-3xl font-light text-white mb-2 md:mb-4">B2B Collateral Injection</h4>
-                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Fjäll equips enterprise partners with premium architectural renders, structural specs, and marketing collateral at zero upfront cost, immediately creating a high-value sales asset.</p>
-                    </div>
-                    
-                    <div id="en-text-1" class="engine-text absolute inset-x-6 sm:inset-x-10 md:inset-x-14 top-1/2 -translate-y-1/2 opacity-0 pointer-events-none flex flex-col justify-center">
-                        <div class="text-emerald-500 font-mono text-[0.65rem] md:text-xs mb-2 md:mb-3 tracking-widest uppercase">Phase 02</div>
-                        <h4 class="text-xl md:text-3xl font-light text-white mb-2 md:mb-4">Retail Pre-Sales Triggered</h4>
-                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Enterprise developers leverage this collateral to secure end-buyers and retail capital. This crystallises market demand for Fjäll inventory without us deploying a single marketing dollar.</p>
-                    </div>
-                    
-                    <div id="en-text-2" class="engine-text absolute inset-x-6 sm:inset-x-10 md:inset-x-14 top-1/2 -translate-y-1/2 opacity-0 pointer-events-none flex flex-col justify-center">
-                        <div class="text-emerald-500 font-mono text-[0.65rem] md:text-xs mb-2 md:mb-3 tracking-widest uppercase">Phase 03</div>
-                        <h4 class="text-xl md:text-3xl font-light text-white mb-2 md:mb-4">Negative Working Capital</h4>
-                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Capital flows directly from developer pre-sales back to Fjäll. Manufacturing is triggered <strong class="text-white">only</strong> when fully funded, eliminating inventory risk and allowing infinite scaling.</p>
-                    </div>
-                    
-                    <div id="en-text-3" class="engine-text absolute inset-x-6 sm:inset-x-10 md:inset-x-14 top-1/2 -translate-y-1/2 opacity-0 pointer-events-none flex flex-col justify-center">
-                        <div class="text-emerald-500 font-mono text-[0.65rem] md:text-xs mb-2 md:mb-3 tracking-widest uppercase">Phase 04</div>
-                        <h4 class="text-xl md:text-3xl font-light text-white mb-2 md:mb-4">45-Day Rapid Assembly</h4>
-                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Traditional developers suffer a 540-day capital freeze. Fjäll manufactures and executes turnkey assembly in 45 days. Capital is instantly unlocked, accelerating yield velocity.</p>
+                <!-- Changing Text Content (Grid Stack handles dynamic height perfectly) -->
+                <div class="w-full lg:w-7/12 p-6 sm:p-10 lg:p-14 relative flex items-center justify-center">
+                    <div class="grid-stack w-full h-auto min-h-[220px]">
+                        
+                        <div id="en-text-0" class="grid-stack-item engine-text opacity-0 pointer-events-none flex flex-col justify-center">
+                            <div class="text-emerald-500 font-mono text-[0.65rem] md:text-xs mb-2 md:mb-3 tracking-widest uppercase">Phase 01</div>
+                            <h4 class="text-xl md:text-3xl font-light text-white mb-2 md:mb-4">B2B Collateral Injection</h4>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Fjäll equips enterprise partners with premium architectural renders, structural specs, and marketing collateral at zero upfront cost, immediately creating a high-value sales asset.</p>
+                        </div>
+                        
+                        <div id="en-text-1" class="grid-stack-item engine-text opacity-0 pointer-events-none flex flex-col justify-center">
+                            <div class="text-emerald-500 font-mono text-[0.65rem] md:text-xs mb-2 md:mb-3 tracking-widest uppercase">Phase 02</div>
+                            <h4 class="text-xl md:text-3xl font-light text-white mb-2 md:mb-4">Retail Pre-Sales Triggered</h4>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Enterprise developers leverage this collateral to secure end-buyers and retail capital. This crystallises market demand for Fjäll inventory without us deploying a single marketing dollar.</p>
+                        </div>
+                        
+                        <div id="en-text-2" class="grid-stack-item engine-text opacity-0 pointer-events-none flex flex-col justify-center">
+                            <div class="text-emerald-500 font-mono text-[0.65rem] md:text-xs mb-2 md:mb-3 tracking-widest uppercase">Phase 03</div>
+                            <h4 class="text-xl md:text-3xl font-light text-white mb-2 md:mb-4">Negative Working Capital</h4>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Capital flows directly from developer pre-sales back to Fjäll. Manufacturing is triggered <strong class="text-white">only</strong> when fully funded, eliminating inventory risk and allowing infinite scaling.</p>
+                        </div>
+                        
+                        <div id="en-text-3" class="grid-stack-item engine-text opacity-0 pointer-events-none flex flex-col justify-center">
+                            <div class="text-emerald-500 font-mono text-[0.65rem] md:text-xs mb-2 md:mb-3 tracking-widest uppercase">Phase 04</div>
+                            <h4 class="text-xl md:text-3xl font-light text-white mb-2 md:mb-4">45-Day Rapid Assembly</h4>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Traditional developers suffer a 540-day capital freeze. Fjäll manufactures and executes turnkey assembly in 45 days. Capital is instantly unlocked, accelerating yield velocity.</p>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -727,7 +691,7 @@ section { scroll-margin-top: 5rem; }
         </div>
     </section>
 
-    <!-- 05. The Expansion Matrix -->
+    <!-- 05. Hub Expansion Strategy (Heatmap) -->
     <section id="expansion" class="space-y-10 lg:space-y-12 reveal pt-12 lg:pt-16 border-t border-slate-800/50">
         <div class="max-w-4xl">
             <span class="kicker">05. Hub Expansion Strategy</span>
@@ -742,35 +706,36 @@ section { scroll-margin-top: 5rem; }
                 <div class="absolute top-4 left-4 md:top-6 md:left-6 text-[0.55rem] md:text-[0.65rem] text-slate-500 font-mono tracking-widest bg-slate-900/80 px-2 py-1 rounded">FJÄLL_STRATEGIC_GRID_V2.0</div>
                 <div class="absolute bottom-4 right-4 md:bottom-6 md:right-6 text-[0.55rem] md:text-[0.65rem] text-emerald-500/70 font-mono tracking-widest bg-emerald-950/30 border border-emerald-900/30 px-2 py-1 rounded">PROJECTION: OFF_BALANCE_SHEET</div>
 
-                <!-- Connectors - adjusted for relative positioning visually if needed, purely CSS -->
+                <!-- Connectors - CSS styling only -->
                 <div class="css-connector hidden sm:block" style="top: 40%; left: 30%; width: 35%; transform: rotate(-25deg);"></div>
                 <div class="css-connector hidden sm:block" style="top: 40%; left: 30%; width: 15%; transform: rotate(45deg);"></div>
 
-                <div class="heatmap-node active" id="node-national-1" style="top: 40%; left: 30%;" onmouseenter="activateNode('national')" onclick="activateNode('national')">
+                <div class="heatmap-node active" id="node-national-1" style="top: 40%; left: 30%;" onmouseenter="activateNode('national')" onclick="activateNode('national')" ontouchstart="activateNode('national')">
                     <div class="node-label">West Java</div>
                 </div>
-                <div class="heatmap-node" id="node-national-2" style="top: 55%; left: 45%;" onmouseenter="activateNode('national')" onclick="activateNode('national')">
+                <div class="heatmap-node" id="node-national-2" style="top: 55%; left: 45%;" onmouseenter="activateNode('national')" onclick="activateNode('national')" ontouchstart="activateNode('national')">
                     <div class="node-label">Bali</div>
                 </div>
                 
-                <div class="heatmap-node regional" id="node-regional" style="top: 25%; left: 65%;" onmouseenter="activateNode('regional')" onclick="activateNode('regional')">
+                <div class="heatmap-node regional" id="node-regional" style="top: 25%; left: 65%;" onmouseenter="activateNode('regional')" onclick="activateNode('regional')" ontouchstart="activateNode('regional')">
                     <div class="node-label text-sky-400">Maritime Spoke</div>
                 </div>
 
-                <div class="heatmap-node global" id="node-global-1" style="top: 20%; left: 15%;" onmouseenter="activateNode('global')" onclick="activateNode('global')"></div>
-                <div class="heatmap-node global" id="node-global-2" style="top: 70%; left: 75%;" onmouseenter="activateNode('global')" onclick="activateNode('global')">
+                <div class="heatmap-node global" id="node-global-1" style="top: 20%; left: 15%;" onmouseenter="activateNode('global')" onclick="activateNode('global')" ontouchstart="activateNode('global')"></div>
+                <div class="heatmap-node global" id="node-global-2" style="top: 70%; left: 75%;" onmouseenter="activateNode('global')" onclick="activateNode('global')" ontouchstart="activateNode('global')">
                     <div class="node-label text-rose-400">Global OEM</div>
                 </div>
             </div>
 
-            <div class="lg:col-span-5 flex flex-col justify-start lg:justify-center relative min-h-[350px] md:min-h-[400px] order-2 lg:order-2">
+            <!-- CSS Grid Stack for the expansion text blocks -->
+            <div class="lg:col-span-5 relative order-2 lg:order-2 grid-stack min-h-[300px] md:min-h-[400px]">
                 
-                <div id="info-national" class="matrix-info glass-panel border-t-4 border-t-emerald-500 w-full h-full flex flex-col justify-center absolute inset-0 transition-all duration-500 z-10 opacity-100 translate-x-0 !p-6 md:!p-8">
+                <div id="info-national" class="grid-stack-item matrix-info glass-panel border-t-4 border-t-emerald-500 w-full h-full flex flex-col justify-center transition-all duration-500 z-10 opacity-100 !p-6 md:!p-8">
                     <div class="text-[0.65rem] md:text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 md:mb-4">Tier 01</div>
                     <h3 class="text-2xl md:text-3xl font-light text-white mb-2">The National Grid</h3>
                     <p class="text-emerald-500 font-semibold text-xs md:text-sm mb-4 md:mb-6 pb-4 md:pb-6 border-b border-slate-700">Mastering the Archipelago</p>
                     
-                    <div class="space-y-4 md:space-y-6 overflow-y-auto">
+                    <div class="space-y-4 md:space-y-6">
                         <div>
                             <h4 class="text-white font-semibold text-sm md:text-base mb-1 md:mb-2">The West Java Anchor</h4>
                             <p class="text-slate-400 text-xs md:text-sm leading-relaxed">The industrial beating heart and primary mass-production engine. Compresses logistics by shipping 3-4 flat-packed units per truck directly into high-velocity corridors.</p>
@@ -782,12 +747,12 @@ section { scroll-margin-top: 5rem; }
                     </div>
                 </div>
 
-                <div id="info-regional" class="matrix-info glass-panel border-t-4 border-t-sky-500 w-full h-full flex flex-col justify-center absolute inset-0 transition-all duration-500 z-0 opacity-0 translate-x-8 pointer-events-none !p-6 md:!p-8">
+                <div id="info-regional" class="grid-stack-item matrix-info glass-panel border-t-4 border-t-sky-500 w-full h-full flex flex-col justify-center transition-all duration-500 z-0 opacity-0 pointer-events-none !p-6 md:!p-8">
                     <div class="text-[0.65rem] md:text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 md:mb-4">Tier 02</div>
                     <h3 class="text-2xl md:text-3xl font-light text-white mb-2">The Regional Grid</h3>
                     <p class="text-sky-500 font-semibold text-xs md:text-sm mb-4 md:mb-6 pb-4 md:pb-6 border-b border-slate-700">The Maritime Spoke</p>
                     
-                    <div class="space-y-4 md:space-y-6 overflow-y-auto">
+                    <div class="space-y-4 md:space-y-6">
                         <p class="text-slate-400 text-xs md:text-sm leading-relaxed">
                             Once the National Grid is saturated, the system naturally spills over. Using the West Java Anchor as the export engine, Fjäll ships containerised components via deep-water ports.
                         </p>
@@ -799,12 +764,12 @@ section { scroll-margin-top: 5rem; }
                     </div>
                 </div>
 
-                <div id="info-global" class="matrix-info glass-panel border-t-4 border-t-rose-500 w-full h-full flex flex-col justify-center absolute inset-0 transition-all duration-500 z-0 opacity-0 translate-x-8 pointer-events-none !p-6 md:!p-8">
+                <div id="info-global" class="grid-stack-item matrix-info glass-panel border-t-4 border-t-rose-500 w-full h-full flex flex-col justify-center transition-all duration-500 z-0 opacity-0 pointer-events-none !p-6 md:!p-8">
                     <div class="text-[0.65rem] md:text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 md:mb-4">Tier 03</div>
                     <h3 class="text-2xl md:text-3xl font-light text-white mb-2">The Global Grid</h3>
                     <p class="text-rose-500 font-semibold text-xs md:text-sm mb-4 md:mb-6 pb-4 md:pb-6 border-b border-slate-700">The OEM Franchise</p>
                     
-                    <div class="space-y-4 md:space-y-6 overflow-y-auto">
+                    <div class="space-y-4 md:space-y-6">
                         <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
                             True global dominance requires localisation without capital expenditure. The tactic of utilising <strong class="text-white">"Certified OEM Assemblers"</strong> is the linchpin of our international scaling.
                         </p>
@@ -820,77 +785,42 @@ section { scroll-margin-top: 5rem; }
         </div>
     </section>
 
-    <!-- 06. Unit Economics -->
+    <!-- 06. Unit Economics (Cards only) -->
     <section id="financials" class="space-y-10 lg:space-y-12 reveal pt-12 lg:pt-16 border-t border-slate-800/50">
         <div class="max-w-4xl">
             <span class="kicker">06. Unit Economics</span>
             <h2 class="text-3xl md:text-5xl font-light text-white mb-4 lg:mb-6">The Year 1 Revenue Engine</h2>
             <p class="text-base lg:text-lg text-slate-400 leading-relaxed">
-                Western Australia acts as our high-margin cash generator. Mid-class and worker housing leverages our manufacturing efficiency to secure outsized, highly scalable project margins averaging <strong class="text-white font-semibold">~30% EBITDA.</strong>
+                Western Australia and Indonesia act as our dual-engine cash generators. Mid-class developments and worker housing leverage our manufacturing efficiency to secure outsized, highly scalable project margins averaging <strong class="text-white font-semibold">~30% EBITDA.</strong>
             </p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-            <div class="lg:col-span-7 glass-panel p-6 md:p-10">
-                <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-end border-b border-slate-700 pb-4 md:pb-6 mb-6 md:mb-8 gap-2 md:gap-4">
-                    <h3 class="text-[0.65rem] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Major WA Deployments (Cash Generator)</h3>
-                    <div class="text-2xl md:text-3xl font-light text-emerald-400">~30% Target Margin</div>
-                </div>
-                <div class="space-y-6 md:space-y-8">
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center group gap-2">
-                        <div>
-                            <div class="text-white font-semibold text-base md:text-lg group-hover:text-emerald-400 transition-colors">Gold Coast / Lancelin South</div>
-                            <div class="text-xs md:text-sm text-slate-500 mt-1">Mega project (~100 units)</div>
-                        </div>
-                        <div class="text-left sm:text-right">
-                            <div class="text-xl md:text-2xl font-light text-emerald-400">$30.0M USD</div>
-                            <div class="text-[0.55rem] md:text-[0.65rem] text-slate-500 uppercase font-bold tracking-widest mt-1">Target CV</div>
-                        </div>
-                    </div>
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center group border-t border-slate-800 pt-6 md:pt-8 gap-2">
-                        <div>
-                            <div class="text-white font-semibold text-base md:text-lg group-hover:text-emerald-400 transition-colors">WA Core (Mid-Class)</div>
-                            <div class="text-xs md:text-sm text-slate-500 mt-1">ARPU >$300K USD, Margin ~$100K USD</div>
-                        </div>
-                        <div class="text-left sm:text-right">
-                            <div class="text-xl md:text-2xl font-light text-white">$2.7M USD</div>
-                            <div class="text-[0.55rem] md:text-[0.65rem] text-slate-500 uppercase font-bold tracking-widest mt-1">Secured CV</div>
-                        </div>
-                    </div>
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center group border-t border-slate-800 pt-6 md:pt-8 gap-2">
-                        <div>
-                            <div class="text-white font-semibold text-base md:text-lg group-hover:text-emerald-400 transition-colors">Short-term Worker Housing</div>
-                            <div class="text-xs md:text-sm text-slate-500 mt-1">Single occupancy (Min 20 units)</div>
-                        </div>
-                        <div class="text-left sm:text-right">
-                            <div class="text-xl md:text-2xl font-light text-white">$1.2M USD</div>
-                            <div class="text-[0.55rem] md:text-[0.65rem] text-slate-500 uppercase font-bold tracking-widest mt-1">Secured CV</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-slate-800 text-center">
-                    <p class="text-xs md:text-sm text-slate-400 leading-relaxed max-w-2xl mx-auto">These margins are achieved via factory-controlled production minimising on-site labour duration, creating a highly repeatable and exceptionally profitable deployment model.</p>
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-panel p-6 md:p-8 border-t-2 border-emerald-500 bg-gradient-to-br from-slate-900 to-obsidian hover:-translate-y-2 transition-transform">
+                <div class="text-[0.65rem] text-slate-500 uppercase font-bold tracking-widest mb-4">Target CV (Mega Projects)</div>
+                <div class="text-white font-semibold text-lg md:text-xl mb-1">Gold Coast & APAC Mega Projects</div>
+                <div class="text-xs md:text-sm text-slate-400 mb-6">~100+ units deployment</div>
+                <div class="text-3xl md:text-4xl font-light text-emerald-400">$30.0M <span class="text-lg text-slate-500">USD</span></div>
             </div>
             
-            <div class="lg:col-span-5 border border-slate-800 rounded-2xl bg-gradient-to-b from-slate-900 to-[#020617] flex flex-col justify-between p-6 md:p-10 shadow-2xl">
-                <div>
-                    <h3 class="text-[0.65rem] md:text-xs font-bold text-slate-500 uppercase tracking-widest text-center mb-6 md:mb-8">Baseline Unit Margin (40m²)</h3>
-                    <div class="chart-container" style="height: 200px; md:height: 220px;">
-                        <canvas id="economicsChart"></canvas>
-                    </div>
-                </div>
-                <div class="mt-6 md:mt-8 text-center border-t border-slate-800 pt-6 md:pt-8">
-                    <div class="text-4xl md:text-5xl font-light text-emerald-400 mb-2 md:mb-3">~30%</div>
-                    <div class="text-[0.55rem] md:text-[0.65rem] font-bold text-slate-500 uppercase tracking-widest">Target EBITDA GENERATION</div>
-                    <p class="text-[0.65rem] md:text-xs text-slate-500 mt-3 md:mt-4 leading-relaxed px-2 md:px-4 hidden sm:block">Achieved via factory-controlled production minimising on-site labour duration.</p>
-                </div>
+            <div class="glass-panel p-6 md:p-8 border-t-2 border-emerald-500 bg-gradient-to-br from-slate-900 to-obsidian hover:-translate-y-2 transition-transform">
+                <div class="text-[0.65rem] text-slate-500 uppercase font-bold tracking-widest mb-4">Secured CV (Mid-Class)</div>
+                <div class="text-white font-semibold text-lg md:text-xl mb-1">WA & Indonesian Core</div>
+                <div class="text-xs md:text-sm text-slate-400 mb-6">ARPU >$300K, Margin ~$100K</div>
+                <div class="text-3xl md:text-4xl font-light text-white">$2.7M <span class="text-lg text-slate-500">USD</span></div>
+            </div>
+            
+            <div class="glass-panel p-6 md:p-8 border-t-2 border-emerald-500 bg-gradient-to-br from-slate-900 to-obsidian hover:-translate-y-2 transition-transform">
+                <div class="text-[0.65rem] text-slate-500 uppercase font-bold tracking-widest mb-4">Secured CV (Worker)</div>
+                <div class="text-white font-semibold text-lg md:text-xl mb-1">High-Density Housing</div>
+                <div class="text-xs md:text-sm text-slate-400 mb-6">Min 20 units initial order</div>
+                <div class="text-3xl md:text-4xl font-light text-white">$1.2M <span class="text-lg text-slate-500">USD</span></div>
             </div>
         </div>
     </section>
 
-    <!-- Interactive Simulator -->
-    <section id="simulator" class="space-y-6 reveal">
+    <!-- 07. Interactive Simulator -->
+    <section id="simulator" class="space-y-6 reveal pt-12 lg:pt-16 border-t border-slate-800/50">
         <div class="glass-panel !p-0 overflow-hidden border border-emerald-900/40 shadow-[0_0_50px_rgba(16,185,129,0.08)]">
             <div class="bg-[#050b14] p-5 md:p-8 border-b border-slate-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 md:gap-4">
                 <h3 class="text-xs md:text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2 md:gap-3">
@@ -970,26 +900,83 @@ section { scroll-margin-top: 5rem; }
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <div class="glass-panel border-t-2 border-t-emerald-500 flex flex-col h-full hover:-translate-y-2 transition-transform p-6 md:p-8">
                 <div class="text-3xl md:text-4xl font-light text-slate-600 mb-4 md:mb-6">01</div>
-                <h3 class="text-lg md:text-xl font-semibold text-white mb-2 md:mb-4">Executive & Operational Talent</h3>
-                <p class="text-slate-400 text-xs md:text-sm leading-relaxed flex-grow">Strategic acquisition of human capital. Immediate onboarding of a veteran Factory Manager, Operations Manager, and global Sales & Marketing leadership to institutionalise our rapid expansion.</p>
+                <h3 class="text-lg md:text-xl font-semibold text-white mb-2 md:mb-4">Executive & Talent</h3>
+                <p class="text-slate-400 text-xs md:text-sm leading-relaxed flex-grow">Immediate onboarding of a veteran Factory Manager, Operations Manager, and global Sales & Marketing leadership to institutionalise our rapid expansion.</p>
             </div>
             <div class="glass-panel border-t-2 border-t-emerald-500 flex flex-col h-full hover:-translate-y-2 transition-transform p-6 md:p-8">
                 <div class="text-3xl md:text-4xl font-light text-slate-600 mb-4 md:mb-6">02</div>
-                <h3 class="text-lg md:text-xl font-semibold text-white mb-2 md:mb-4">Manufacturing Hub Expansion</h3>
-                <p class="text-slate-400 text-xs md:text-sm leading-relaxed flex-grow">Scaling physical infrastructure. Upgrading our current Bali and Lombok facilities to exponentially increase output, supporting the massive domestic pipeline and flat-packed component exports for Australia.</p>
+                <h3 class="text-lg md:text-xl font-semibold text-white mb-2 md:mb-4">Manufacturing Hubs</h3>
+                <p class="text-slate-400 text-xs md:text-sm leading-relaxed flex-grow">Upgrading current Bali and Lombok facilities to exponentially increase output, supporting the domestic pipeline and flat-packed components for Australia.</p>
             </div>
             <div class="glass-panel border-t-2 border-t-emerald-500 flex flex-col h-full bg-emerald-950/20 hover:-translate-y-2 transition-transform shadow-[0_0_30px_rgba(16,185,129,0.05)] p-6 md:p-8">
                 <div class="text-3xl md:text-4xl font-light text-emerald-800 mb-4 md:mb-6">03</div>
-                <h3 class="text-lg md:text-xl font-semibold text-emerald-400 mb-2 md:mb-4">Global IP & Legal Frameworks</h3>
-                <p class="text-slate-300 text-xs md:text-sm leading-relaxed flex-grow">Structuring robust, ironclad legal frameworks. This enables us to aggressively monetise PIR 100 and BEMMELS technology via exclusive international OEM licensees for off-balance-sheet growth.</p>
+                <h3 class="text-lg md:text-xl font-semibold text-emerald-400 mb-2 md:mb-4">Global IP & Legal</h3>
+                <p class="text-slate-300 text-xs md:text-sm leading-relaxed flex-grow">Structuring robust, ironclad legal frameworks to monetise GX-100 and BEMMELS technology via exclusive international OEM licensees.</p>
             </div>
         </div>
     </section>
 
-    <!-- 09. Transaction Structure -->
+    <!-- 09. The Promised Land -->
+    <section id="promised-land" class="space-y-10 lg:space-y-12 reveal pt-12 lg:pt-16 border-t border-slate-800/50">
+        <div class="max-w-4xl">
+            <span class="kicker">09. Vision & Enterprise Value</span>
+            <h2 class="text-4xl md:text-6xl font-light text-white mb-4 lg:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-500">
+                The Promised Land
+            </h2>
+            <p class="text-lg md:text-xl text-slate-300 leading-relaxed">
+                Post-funding execution mathematically drives Fjäll from a high-yield regional manufacturer to an infinitely scalable global IP holding company. <strong class="text-white">This is the 36-month simulation.</strong>
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+            <div class="lg:col-span-8 bg-[#0a0f1c] border border-emerald-900/50 rounded-2xl p-6 md:p-12 relative overflow-hidden shadow-[0_0_40px_rgba(16,185,129,0.1)]">
+                <div class="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+                
+                <div class="flex items-center gap-4 mb-8 md:mb-10 relative z-10">
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-500 rounded flex items-center justify-center text-obsidian font-bold text-xl shrink-0">
+                        <span style="font-family: monospace;">[+]</span>
+                    </div>
+                    <div>
+                        <div class="text-[0.55rem] md:text-[0.65rem] text-emerald-400 font-mono uppercase tracking-widest">Post-Funding State</div>
+                        <div class="text-xl md:text-2xl font-light text-white">Global OEM Network Live</div>
+                    </div>
+                </div>
+
+                <div class="space-y-6 md:space-y-8 relative z-10">
+                    <div class="border-l-2 border-emerald-500 pl-4 md:pl-6">
+                        <h4 class="text-white font-semibold text-base md:text-lg mb-1 md:mb-2">Off-Balance-Sheet Expansion</h4>
+                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Fjäll no longer builds factories. We license our proprietary MMC framework (GX-100 + BEMMELS) to certified regional assemblers globally, collecting royalties and high-margin component export fees.</p>
+                    </div>
+                    <div class="border-l-2 border-slate-700 pl-4 md:pl-6 hover:border-emerald-400 transition-colors">
+                        <h4 class="text-white font-semibold text-base md:text-lg mb-1 md:mb-2">10,000+ Annual Unit Velocity</h4>
+                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">By shifting to an IP and component distribution model, unit deployment scales logarithmically without corresponding CapEx increases, addressing the 300M unit global deficit directly.</p>
+                    </div>
+                    <div class="border-l-2 border-slate-700 pl-4 md:pl-6 hover:border-emerald-400 transition-colors">
+                        <h4 class="text-white font-semibold text-base md:text-lg mb-1 md:mb-2">Liquidity Event Positioning</h4>
+                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Attaining a $100M+ USD Revenue Run Rate with ~40% net margins positions Fjäll as an absolute prime target for a strategic acquisition by global tier-1 developers or a highly lucrative public offering.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4 flex flex-col gap-6">
+                <div class="glass-panel flex-1 flex flex-col justify-center text-center p-6 md:p-8 bg-gradient-to-br from-[#0a0f1c] to-[#020617]">
+                    <div class="text-[0.55rem] md:text-[0.65rem] text-slate-500 font-bold uppercase tracking-widest mb-3 md:mb-4">Projected 36-Month Valuation</div>
+                    <div class="text-3xl md:text-5xl font-light text-white mb-1 md:mb-2">$250M+</div>
+                    <div class="text-emerald-500 font-mono text-[0.65rem] md:text-xs">Enterprise Value Target</div>
+                </div>
+                <div class="glass-panel flex-1 flex flex-col justify-center text-center p-6 md:p-8 bg-gradient-to-br from-[#0a0f1c] to-[#020617]">
+                    <div class="text-[0.55rem] md:text-[0.65rem] text-slate-500 font-bold uppercase tracking-widest mb-3 md:mb-4">Licensing Margins</div>
+                    <div class="text-3xl md:text-5xl font-light text-white mb-1 md:mb-2">85%</div>
+                    <div class="text-emerald-500 font-mono text-[0.65rem] md:text-xs">Pure IP Royalties</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Transaction Structure -->
     <section id="structure" class="space-y-10 lg:space-y-12 pb-24 lg:pb-32 reveal pt-12 lg:pt-16 border-t border-slate-800/50">
         <div class="max-w-4xl">
-            <span class="kicker">09. Transaction Architecture</span>
+            <span class="kicker">10. Transaction Architecture</span>
             <h2 class="text-3xl md:text-5xl font-light text-white mb-4 lg:mb-6">Structure & Initialisation</h2>
             <p class="text-base lg:text-lg text-slate-400 leading-relaxed">
                 Target closing Q3 2026. Review the post-transaction cap table and immediate next steps for formal diligence.
@@ -1002,7 +989,6 @@ section { scroll-margin-top: 5rem; }
                 <h3 class="text-[0.65rem] md:text-xs font-bold text-slate-500 uppercase tracking-widest mb-8 md:mb-12 w-full text-center border-b border-slate-800/60 pb-4 md:pb-6">Post-Transaction Cap Table</h3>
                 
                 <div class="w-full max-w-sm mt-2 md:mt-4">
-                    <!-- Adjusted for mobile: flex-col on small, row on slightly larger -->
                     <div class="flex flex-col sm:flex-row justify-between gap-4 md:gap-6 w-full">
                         <div class="border-t-2 border-emerald-500 bg-[#0a0f1c] p-4 md:p-5 w-full sm:w-1/2 text-center shadow-2xl transition-transform hover:-translate-y-2 cursor-default rounded-b-lg">
                             <div class="text-[0.55rem] md:text-[0.65rem] font-semibold text-slate-400 uppercase tracking-wider mb-2 md:mb-3">Strategic Investor</div>
@@ -1089,58 +1075,45 @@ section { scroll-margin-top: 5rem; }
         const daysElement = document.getElementById('loader-days');
         const subtitle = document.getElementById('loader-subtitle');
         const title = document.getElementById('loader-title');
+        const tradBar = document.querySelector('.animate-crawl');
+        const fjallBar = document.getElementById('loader-fjall-bar');
         
         // Prevent scroll while loading
         document.body.style.overflow = 'hidden';
 
-        let days = 540;
-        
-        // Loader logic
         setTimeout(() => {
-            if(title) title.classList.add('animate-pulse');
+            const fjallBlock = document.getElementById('loader-fjall');
+            if (fjallBlock) {
+                fjallBlock.classList.remove('opacity-0', 'translate-y-4');
+                fjallBlock.classList.add('opacity-100', 'translate-y-0');
+            }
             
-            const interval = setInterval(() => {
-                let drop = Math.floor(Math.random() * 30) + 10;
-                days -= drop;
+            setTimeout(() => {
+                if (fjallBar) {
+                    fjallBar.style.transition = 'width 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                    fjallBar.style.width = '100%';
+                }
+                const tradBlock = document.getElementById('loader-trad');
+                if (tradBlock) tradBlock.style.opacity = '0.2';
                 
-                if(days <= 45) {
-                    days = 45;
-                    clearInterval(interval);
-                    if(daysElement) {
-                        daysElement.innerHTML = "45";
-                        daysElement.classList.remove('text-white', 'font-light');
-                        daysElement.classList.add('text-emerald-400', 'font-bold', 'drop-shadow-[0_0_30px_rgba(16,185,129,0.8)]', 'scale-110');
-                    }
-                    if(title) {
-                        title.classList.remove('animate-pulse');
-                        title.innerHTML = "ACCELERATED CAPITAL VELOCITY";
-                    }
-                    if(subtitle) {
+                setTimeout(() => {
+                    if (subtitle) {
                         subtitle.classList.remove('opacity-0');
                         subtitle.classList.add('opacity-100');
                     }
                     
-                    // Fade out loader
                     setTimeout(() => {
-                        if(loader) loader.style.opacity = '0';
+                        if (loader) loader.style.opacity = '0';
                         setTimeout(() => {
-                            if(loader) loader.style.display = 'none';
+                            if (loader) loader.style.display = 'none';
                             document.body.style.overflow = 'auto'; 
                             document.body.style.overflowX = 'hidden'; 
                             reveal(); // Initialize scroll reveals
                         }, 1000);
-                    }, 1800);
-                } else {
-                    if(daysElement) {
-                        daysElement.innerHTML = days;
-                        // Slight glitch effect
-                        if(days % 3 === 0) {
-                           daysElement.style.transform = `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px)`; 
-                        }
-                    }
-                }
-            }, 30); // Speed of countdown
-        }, 1000);
+                    }, 1200);
+                }, 600);
+            }, 500);
+        }, 800);
 
         // --- Capital Engine Loop Logic ---
         let currentEngineStep = 0;
@@ -1155,8 +1128,6 @@ section { scroll-margin-top: 5rem; }
                 if (text) {
                     text.style.opacity = '0';
                     text.style.pointerEvents = 'none';
-                    // keep translate for centering
-                    text.style.transform = 'translateY(10px) translateY(-50%)'; 
                 }
             }
             
@@ -1169,7 +1140,6 @@ section { scroll-margin-top: 5rem; }
             if (activeText) {
                 activeText.style.opacity = '1';
                 activeText.style.pointerEvents = 'all';
-                activeText.style.transform = 'translateY(0) translateY(-50%)';
             }
 
             // Move Particle
@@ -1220,15 +1190,15 @@ section { scroll-margin-top: 5rem; }
         }
 
         document.querySelectorAll('.matrix-info').forEach(el => {
-            el.classList.remove('opacity-100', 'translate-x-0', 'z-10');
-            el.classList.add('opacity-0', 'translate-x-8', 'z-0', 'pointer-events-none');
+            el.classList.remove('opacity-100', 'z-10');
+            el.classList.add('opacity-0', 'z-0', 'pointer-events-none');
         });
         
         const target = document.getElementById('info-' + tierId);
         if(target) {
             setTimeout(() => {
-                target.classList.remove('opacity-0', 'translate-x-8', 'z-0', 'pointer-events-none');
-                target.classList.add('opacity-100', 'translate-x-0', 'z-10');
+                target.classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+                target.classList.add('opacity-100', 'z-10');
             }, 50);
         }
     }
@@ -1274,9 +1244,9 @@ section { scroll-margin-top: 5rem; }
     }
     window.addEventListener("scroll", reveal);
 
-    // --- ScrollSpy logic ---
+    // --- ScrollSpy logic (for desktop nav and mobile dock) ---
     const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.nav-link');
+    const navLinks = document.querySelectorAll('.nav-link, .dock-item');
 
     window.addEventListener('scroll', () => {
         let current = '';
@@ -1334,9 +1304,7 @@ section { scroll-margin-top: 5rem; }
 
     const gridColor = 'rgba(30, 41, 59, 0.5)'; 
 
-    // Initialize Charts only if canvases exist
     window.onload = function() {
-        // --- 1. Global Deficit Chart (Line) ---
         const canvasGlobal = document.getElementById('globalDeficitChart');
         if(canvasGlobal) {
             new Chart(canvasGlobal.getContext('2d'), {
@@ -1367,7 +1335,6 @@ section { scroll-margin-top: 5rem; }
             });
         }
 
-        // --- 2. Indonesian Deficit Chart (Bar) ---
         const canvasIndo = document.getElementById('indoDeficitChart');
         if(canvasIndo) {
             new Chart(canvasIndo.getContext('2d'), {
@@ -1392,7 +1359,6 @@ section { scroll-margin-top: 5rem; }
             });
         }
 
-        // --- 3. Pipeline Chart (Horizontal Bar) ---
         const canvasPipeline = document.getElementById('pipelineChart');
         if(canvasPipeline) {
             new Chart(canvasPipeline.getContext('2d'), {
@@ -1420,40 +1386,13 @@ section { scroll-margin-top: 5rem; }
             });
         }
 
-        // --- 4. Economics Chart (Donut) ---
-        const canvasEcon = document.getElementById('economicsChart');
-        if(canvasEcon) {
-            new Chart(canvasEcon.getContext('2d'), {
-                type: 'doughnut',
-                data: {
-                    labels: ['Build Cost', 'Gross Profit'],
-                    datasets: [{
-                        data: [20000, 20000], 
-                        backgroundColor: ['#1e293b', '#10b981'], 
-                        borderWidth: 0, hoverOffset: 4
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false, cutout: '80%', 
-                    plugins: {
-                        tooltip: { callbacks: commonTooltipCallback },
-                        legend: { position: 'bottom', labels: { color: '#cbd5e1', padding: 20, usePointStyle: true } }
-                    }
-                }
-            });
-        }
-
-        // --- 5. INTERACTIVE SIMULATOR LOGIC & CHART ---
         const volSlider = document.getElementById('volumeSlider');
         const priceSlider = document.getElementById('priceSlider');
-        
         const volValueDisp = document.getElementById('volValue');
         const priceValueDisp = document.getElementById('priceValue');
-        
         const outRevenue = document.getElementById('outRevenue');
         const outCost = document.getElementById('outCost');
         const outEbitda = document.getElementById('outEbitda');
-
         const canvasSim = document.getElementById('simChart');
         
         if (volSlider && priceSlider && canvasSim) {
